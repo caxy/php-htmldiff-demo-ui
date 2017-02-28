@@ -1,0 +1,164 @@
+/* Difference Highlighting and Strike-through
+------------------------------------------------ */
+
+ins {
+  color: #333333;
+  background-color: #eaffea;
+  text-decoration: none;
+}
+
+del {
+  color: #AA3333;
+  background-color: #ffeaea;
+  text-decoration: line-through;
+  &.diffimg.diffsrc {
+    display: inline-block;
+    position: relative;
+    &:before {
+      position: absolute;
+      content: "";
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(to left top, rgba(255, 0, 0, 0), rgba(255, 0, 0, 0) 49.5%, rgba(255, 0, 0, 1) 49.5%, rgba(255, 0, 0, 1) 50.5%), repeating-linear-gradient(to left bottom, rgba(255, 0, 0, 0), rgba(255, 0, 0, 0) 49.5%, rgba(255, 0, 0, 1) 49.5%, rgba(255, 0, 0, 1) 50.5%);
+    }
+  }
+}
+
+/* Image Diffing
+------------------------------------------------ */
+
+/* List Diffing
+------------------------------------------------ */
+/* List Styles */
+
+.diff-list {
+  list-style: none;
+  counter-reset: section;
+  display: table;
+  > li {
+    &.normal, &.removed {
+      display: table-row;
+    }
+    &.replacement {
+      display: table-row;
+      &:before {
+        color: #333333;
+        background-color: #eaffea;
+        text-decoration: none;
+      }
+    }
+    > div {
+      display: inline;
+    }
+    &.new:before {
+      color: #333333;
+      background-color: #eaffea;
+      text-decoration: none;
+    }
+    &.removed:before {
+      counter-increment: section;
+      color: #AA3333;
+      background-color: #ffeaea;
+      text-decoration: line-through;
+    }
+    &.normal:before, &.removed:before, &.replacement:before {
+      width: 15px;
+      overflow: hidden;
+      content: counters(section, ".") ". ";
+      display: table-cell;
+      text-indent: -1em;
+      padding-left: 1em;
+    }
+    &.normal:before {
+      counter-increment: section;
+    }
+  }
+}
+
+/* List Counters / Numbering */
+
+li.replacement + li.replacement:before, .diff-list > li.replacement:first-child:before {
+  counter-increment: section;
+}
+
+ol.diff-list li.removed + li {
+  &.replacement {
+    counter-increment: none;
+  }
+  &.removed + li {
+    &.replacement {
+      counter-increment: section -1;
+    }
+    &.removed + li {
+      &.replacement {
+        counter-increment: section -2;
+      }
+      &.removed + li {
+        &.replacement {
+          counter-increment: section -3;
+        }
+        &.removed + li {
+          &.replacement {
+            counter-increment: section -4;
+          }
+          &.removed + li {
+            &.replacement {
+              counter-increment: section -5;
+            }
+            &.removed + li {
+              &.replacement {
+                counter-increment: section -6;
+              }
+              &.removed + li {
+                &.replacement {
+                  counter-increment: section -7;
+                }
+                &.removed + li {
+                  &.replacement {
+                    counter-increment: section -8;
+                  }
+                  &.removed + li {
+                    &.replacement {
+                      counter-increment: section -9;
+                    }
+                    &.removed + li {
+                      &.replacement {
+                        counter-increment: section -10;
+                      }
+                      &.removed + li.replacement {
+                        counter-increment: section -11;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Exception Lists */
+
+ul.exception {
+  list-style: none;
+  content: none;
+  li:before {
+    list-style: none;
+    content: none;
+  }
+}
+
+.diff-list ul.exception ol {
+  list-style: none;
+  counter-reset: exception-section;
+  /* Creates a new instance of the section counter with each ol element */
+  > li:before {
+    counter-increment: exception-section;
+    content: counters(exception-section, ".") ".";
+  }
+}

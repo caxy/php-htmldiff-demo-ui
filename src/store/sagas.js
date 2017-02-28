@@ -1,11 +1,13 @@
 import _ from 'lodash';
 import { fork } from 'redux-saga/effects';
 import { loginFlow } from '../redux/modules/auth';
+import { sagas as demoSagas } from '../routes/Demo/modules/demo';
 
 export const makeRootSaga = (asyncSagas = {}) => {
   const sagas = {
     // Sync sagas can be added here.
     loginFlow,
+    ...demoSagas,
     ...asyncSagas
   };
 

@@ -4,34 +4,42 @@ import './Header.scss';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import FontIcon from 'material-ui/FontIcon';
+import { ToolbarGroup } from 'material-ui/Toolbar';
+
+const buttonStyle = {
+  backgroundColor: 'transparent',
+  color: 'white'
+};
 
 export const Header = ({auth, handleLogout}) => (
   <AppBar
     title="caxy/php-htmldiff"
-    iconElementRight={<FlatButton
-      href="https://github.com/caxy/php-htmldiff"
-      target="_blank"
-      label="Github"
-      secondary={true}
-      icon={<FontIcon className="fa fa-github" />}
-    />}
-  />
-  // <div>
-  //   <h1>Caxy Front End Starter Kit</h1>
-  //   <IndexLink to='/' activeClassName='route--active'>
-  //     Home
-  //   </IndexLink>
-  //   {' · '}
-  //   <Link to='/counter' activeClassName='route--active'>
-  //     Counter
-  //   </Link>
-  //   {auth.isAuthenticated ? (
-  //     <div>
-  //       {auth.username}
-  //       <a href="#" onClick={handleLogout}>Logout</a>
-  //     </div>
-  //   ) : ''}
-  // </div>
+  >
+    <ToolbarGroup>
+      {/*<FlatButton
+        href="/"
+        label="Home"
+        style={buttonStyle}
+      />
+      <FlatButton
+        href="/demo"
+        label="Demo"
+        style={buttonStyle}
+      />
+      <FlatButton
+        href="/compare"
+        label="Compare"
+        style={buttonStyle}
+      />*/}
+      <FlatButton
+        href="https://github.com/caxy/php-htmldiff"
+        target="_blank"
+        label="Github"
+        style={buttonStyle}
+        icon={<FontIcon className="fa fa-github" />}
+      />
+    </ToolbarGroup>
+  </AppBar>
 );
 
 Header.propTypes = {

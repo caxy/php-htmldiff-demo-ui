@@ -1,13 +1,20 @@
 import fetch from 'isomorphic-fetch';
 import ls from 'local-storage';
+import traverson from 'traverson';
+import Promise from 'bluebird';
 
 class Api {
   static defaultOptions = {
-    baseUrl: 'http://symfony-starter-kit.dev/app_dev.php'
+    baseUrl: 'http://php-htmldiff-demo-api.dev:8000/app_dev.php',
+    apiPath: 'api/index.jsonld'
   };
 
   constructor (options) {
     this.options = Object.assign({}, Api.defaultOptions, options);
+    this.api = traverson
+      .from(`${this.options.baseUrl}/${this.options.apiPath}`)
+      .withRequestOptions({ headers: { Accept: 'application/ld+json' } })
+      .json();
   }
 
   authenticate (username, password) {
@@ -38,6 +45,29 @@ class Api {
     });
   }
 
+  getHtmlDiff (htmlOld, htmlNew) {
+    return this.requestJson(`diff/caxy_htmldiff`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({htmlOld, htmlNew})
+    })
+      .then(json => {
+        return json.htmlDiff;
+      });
+  }
+
+  getDemos () {
+    const apiRequest = this.api.newRequest().follow('demo');
+    const getResource = Promise.promisify(apiRequest.getResource);
+
+    return getResource.call(apiRequest)
+      .then(document => {
+        return document['hydra:member'];
+      });
+  }
+
   storeItem (key, value) {
     return ls(key, value);
   }
@@ -57,7 +87,7 @@ class Api {
           throw new Error(`Bad response from server: ${response.statusText}`);
         }
 
-        response.json();
+        return response.json();
       });
   }
 

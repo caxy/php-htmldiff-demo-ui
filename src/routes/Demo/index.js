@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import { injectReducer } from '../../store/reducers';
 import { injectMultipleSagas } from '../../store/sagas';
+import { fetchAllDemos } from './modules/demo';
 
 export default (store) => ({
   path : 'demo',
@@ -13,14 +14,20 @@ export default (store) => ({
           dependencies for bundling   */
       const Demo = require('./containers/DemoContainer').default;
       const reducer = require('./modules/demo').default;
+      const sagas = require('./modules/demo').sagas;
 
       /*  Add the reducer to the store on key 'demo'  */
-      // injectReducer(store, { key: 'demo', reducer });
+      injectReducer(store, { key: 'demo', reducer });
 
       /*  Return getComponent   */
       cb(null, Demo);
 
     /* Webpack named bundle   */
     }, 'demo')
+  },
+  onEnter (nextState, replace, callback) {
+    console.log('onenter');
+    store.dispatch(fetchAllDemos());
+    callback();
   }
 });

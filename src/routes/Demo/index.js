@@ -4,7 +4,6 @@ import { injectMultipleSagas } from '../../store/sagas';
 import { fetchAllDemos } from './modules/demo';
 
 export default (store) => ({
-  path : 'demo',
   /*  Async getComponent is only invoked when route matches   */
   getComponent (nextState, cb) {
     /*  Webpack - use 'require.ensure' to create a split point

@@ -8,12 +8,7 @@ import UserRoute from './User';
 export const createRoutes = (store) => ({
   path        : '/',
   component   : CoreLayout,
-  onEnter     : (nextState, replace) => {
-    if (nextState.location.pathname === '/') {
-      return replace('/demo');
-    }
-  },
-  indexRoute  : Home,
+  indexRoute  : DemoRoute(store),
   childRoutes : [
     DemoRoute(store),
     LoginRoute(store),

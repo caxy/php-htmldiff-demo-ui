@@ -2,8 +2,8 @@ FROM node:16 AS builder
 
 WORKDIR /app
 
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json ./
+RUN yarn install
 
 COPY . .
 RUN NODE_ENV=production node bin/compile

@@ -147,7 +147,6 @@
     "karma-webpack-with-fast-source-maps": "^1.10.1",
     "kss": "^3.0.0-beta.17",
     "mocha": "^3.2.0",
-    "node-sass": "^7.0.0",
     "nodemon": "^1.11.0",
     "path": "^0.12.7",
     "phantomjs-prebuilt": "^2.1.14",
@@ -163,6 +162,7 @@
     "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.9.0",
     "webpack-hot-middleware": "^2.15.0",
-    "yargs": "^6.6.0"
+    "yargs": "^6.6.0",
+    "sass": "^1.32.0"
   }
 }

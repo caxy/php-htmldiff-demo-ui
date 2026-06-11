@@ -75,7 +75,20 @@ if (project.env === 'development') {
   // Serving ~/dist by default. Ideally these files should be served by
   // the web server and not the app server, but this helps to demo the
   // server in production.
-  app.use(express.static(project.paths.dist()))
+
+  // Serve runtime config so API_URL can be set via env var without rebuilding
+  app.get('/api-config.js', (req, res) => {
+    res.setHeader('Content-Type', 'application/javascript');
+    const apiUrl = (process.env.API_URL || '').replace(/'/g, "\\'");
+    res.send(`window.API_URL = '${apiUrl}';`);
+  });
+
+  app.use(express.static(project.paths.dist()));
+
+  // SPA fallback — serve index.html for any route not matched by static files
+  app.use('*', (req, res) => {
+    res.sendFile(path.join(project.paths.dist(), 'index.html'));
+  });
 }
 
 module.exports = app;

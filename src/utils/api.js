@@ -5,7 +5,7 @@ import Promise from 'bluebird';
 
 class Api {
   static defaultOptions = {
-    baseUrl: 'http://php-htmldiff-demo-api.dev:8000/app_dev.php',
+    baseUrl: (typeof window !== 'undefined' && window.API_URL) || 'http://php-htmldiff-demo-api.dev:8000/app_dev.php',
     apiPath: 'api/index.jsonld'
   };
 

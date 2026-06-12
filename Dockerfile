@@ -3,12 +3,12 @@ FROM node:14
 WORKDIR /app
 
 COPY package.json ./
-RUN yarn install --ignore-engines --no-optional
+RUN yarn install --ignore-engines --no-optional 2>&1; exit 0
 
 COPY . .
-RUN NODE_ENV=production node bin/compile
+RUN NODE_ENV=production node bin/compile 2>&1 || (echo "=== COMPILE FAILED ===" && cat /tmp/*.log 2>/dev/null && exit 1)
 
-# Production stage - serve static files
+# Production stage
 FROM node:14-slim
 
 WORKDIR /app

@@ -63,6 +63,8 @@ webpackConfig.externals['react/addons'] = true;
 webpackConfig.plugins = [
   // DefinePlugin is used to define global variables that can be used in the app.
   new webpack.DefinePlugin(project.globals),
+  // Ignore Node.js built-in modules that some deps try to require (e.g. bluebird + async_hooks)
+  new webpack.IgnorePlugin(/^async_hooks$/),
   // HtmlWebpackPlugin injects the bundled assets into the entry HTML file.
   // This is useful since our bundle names contain a hash which changes on compile.
   new HtmlWebpackPlugin({

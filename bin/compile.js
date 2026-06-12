@@ -23,7 +23,7 @@ const webpackCompiler = (webpackConfig) =>
 
       if (jsonStats.errors.length > 0) {
         debug('Webpack compiler encountered errors.');
-        debug(jsonStats.errors.join('\n'));
+        console.error('WEBPACK ERRORS:', jsonStats.errors.join('\n'));
         return reject(new Error('Webpack compiler encountered errors'))
       } else if (jsonStats.warnings.length > 0) {
         debug('Webpack compiler encountered warnings.');

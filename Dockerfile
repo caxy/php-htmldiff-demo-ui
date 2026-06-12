@@ -6,7 +6,7 @@ COPY package.json ./
 RUN yarn install --ignore-engines --no-optional 2>&1; exit 0
 
 COPY . .
-RUN NODE_ENV=production node bin/compile 2>&1 || (echo "=== COMPILE FAILED ===" && cat /tmp/*.log 2>/dev/null && exit 1)
+RUN DEBUG=app:* NODE_ENV=production node bin/compile
 
 # Production stage
 FROM node:14-slim
